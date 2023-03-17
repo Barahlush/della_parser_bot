@@ -35,4 +35,5 @@ class Filter(BaseModel):
 
 class User(BaseModel):
     username = CharField(unique=True)
-    filters = ForeignKeyField(Filter)
+    chat_id = CharField(unique=True)
+    filters = ForeignKeyField(Filter, null=True, default=None)

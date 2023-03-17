@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from dataclasses import dataclass
 from datetime import datetime, timedelta
 from urllib.parse import urljoin
@@ -19,6 +21,7 @@ class RoutePoint:
 
 @dataclass
 class SearchCard:
+    order_id: str
     creation_time: datetime | None
     country: str | None
     from_location: RoutePoint
@@ -29,7 +32,12 @@ class SearchCard:
     volume: str | None
     cargo_type: str | None
     date: str | None
-    link: str | None
+    link: str
+
+    def __eq__(self, other: object) -> bool:
+        if not isinstance(other, SearchCard):
+            return NotImplemented
+        return self.order_id == other.order_id
 
     def __repr__(self) -> str:
         if self.creation_time:
@@ -145,7 +153,7 @@ class DellaParser:
         if path := card_tag.select_one('.request_distance').get('href', None):
             link = urljoin(base_url, path)
         else:
-            link = None
+            raise ValueError('Link to the card is not found')
 
         # Extract truck type
         truck_type = extract_text(card_tag, '.truck_type')
@@ -159,7 +167,10 @@ class DellaParser:
         # Extract distance
         distance = extract_text(card_tag, 'a.distance')
 
+        order_id = link.split('=')[-1]
+
         return SearchCard(
+            order_id,
             time_of_creation,
             country_name,
             from_location,

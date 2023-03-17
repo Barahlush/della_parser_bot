@@ -1,3 +1,5 @@
+import time
+
 import telebot
 from loguru import logger
 from peewee import SqliteDatabase
@@ -21,6 +23,18 @@ def start_message(message: telebot.types.Message) -> None:
     with db:
         try:
             db.create_tables([User, Filter])
-            User.create(username=message.from_user.username)
+            User.create(
+                username=message.from_user.username, chat_id=message.chat.id
+            )
+            logger.info(message.chat.id)
         except Exception:
             logger.exception(messages['unknown_error'])
+
+
+if __name__ == '__main__':
+    while True:
+        try:
+            bot.polling(none_stop=True)
+        except Exception as e:
+            logger.exception(f'Error polling for messages: {e}')
+            time.sleep(5)
