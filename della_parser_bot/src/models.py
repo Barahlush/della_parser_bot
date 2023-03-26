@@ -1,10 +1,8 @@
 import datetime
 
 from peewee import (
-    BooleanField,
     CharField,
     DateField,
-    ForeignKeyField,
     Model,
     SqliteDatabase,
 )
@@ -22,18 +20,16 @@ class BaseModel(Model):  # type: ignore
 
 
 class Filter(BaseModel):
-    country = CharField()
-    city = CharField()
-    cargo_type = CharField()
-    truck_type = CharField()
-    weight = CharField()
-    volume = CharField()
-    date = DateField()
-    distance = CharField()
-    is_active = BooleanField(default=True)
+    country_from = CharField()
+    country_to = CharField()
 
 
 class User(BaseModel):
     username = CharField(unique=True)
     chat_id = CharField(unique=True)
-    filters = ForeignKeyField(Filter, null=True, default=None)
+
+    def __str__(self) -> str:
+        return str(self.username)
+
+    def __repr(self) -> str:
+        return str(self.username)

@@ -23,13 +23,17 @@ def start_message(message: telebot.types.Message) -> None:
     with db:
         try:
             db.create_tables([User, Filter])
-            User.create(
+            User.get_or_create(
                 username=message.from_user.username, chat_id=message.chat.id
             )
             logger.info(message.chat.id)
         except Exception:
             logger.exception(messages['unknown_error'])
 
+
+# bot.register_callback_query_handler(
+
+# bot.register_message_handler(
 
 if __name__ == '__main__':
     while True:

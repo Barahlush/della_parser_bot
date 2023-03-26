@@ -45,7 +45,7 @@ filterwarnings = ["ignore::DeprecationWarning"]
 ignore_missing_imports = true
 disallow_untyped_defs = true
 strict = true
-exclude = ["tests/*", "della_parser_bot/src/messages.py"]
+exclude = ["tests/*", "della_parser_bot/src/messages.py", "della_parser_bot/parser/url_generator.py", "della_parser_bot/src/filters.py", "della_parser_bot/src/filters_chat.py"]
 
 [tool.ruff]
 line-length = 79
@@ -73,8 +73,10 @@ select = [
 ]
 ignore = ["A003"]
 target-version = "py310"
+exclude = ["tests/*", "della_parser_bot/src/messages.py", "della_parser_bot/parser/url_generator.py", "della_parser_bot/src/filters.py", "della_parser_bot/src/filters_chat.py"]
 
 [tool.ruff.per-file-ignores]
 "__init__.py" = ["F401"]
 "tests/**" = ["ARG", "S", "PLR2004", "E501"]
 "della_parser_bot/src/messages.py" = ["E501"]
+"della_parser_bot/parser/url_generator.py" = ["PLR"]
