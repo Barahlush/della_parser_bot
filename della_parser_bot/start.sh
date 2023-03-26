@@ -1,0 +1,1 @@
+celery -A della_parser_bot worker -B -E -l info

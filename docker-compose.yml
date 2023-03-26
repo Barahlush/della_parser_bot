@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+  celery:
+    build: ./della_parser_bot
+    image: della_parser_bot
+    container_name: della_parser_bot
+    env_file:
+      - .env
+    depends_on:
+      - redis
+    volumes:
+      - ./db_files:/app/db_files
+
+  redis:
+    image: redis
+    ports:
+      - '6379:6379'
+
+  # bot:
+  #   image: della_parser_bot
+  #   env_file:
+  #     - .env
+  #   depends_on:
+  #     - redis
+  #   command: python3 della_parser_bot/src/bot.py
+    
