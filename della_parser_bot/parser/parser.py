@@ -19,6 +19,15 @@ class RoutePoint:
         return f'{self.city}, {self.country}, {self.region}'
 
 
+# The code contains a class that represents a search card.
+# The class has a number of attributes that describe the search card.
+# The class has a special method __eq__ that compares search cards by their
+# order_id. This is needed to check that the search card was added to the
+# database.
+# The class has a special method __repr__ that prints the search card in a
+# readable format.
+
+
 @dataclass
 class SearchCard:
     order_id: str

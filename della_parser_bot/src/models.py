@@ -1,11 +1,6 @@
 import datetime
 
-from peewee import (
-    CharField,
-    DateField,
-    Model,
-    SqliteDatabase,
-)
+from peewee import CharField, DateField, ForeignKeyField, Model, SqliteDatabase
 
 from della_parser_bot.config import DATABASE_PATH
 
@@ -19,11 +14,6 @@ class BaseModel(Model):  # type: ignore
         database = db
 
 
-class Filter(BaseModel):
-    country_from = CharField()
-    country_to = CharField()
-
-
 class User(BaseModel):
     username = CharField(unique=True)
     chat_id = CharField(unique=True)
@@ -33,3 +23,9 @@ class User(BaseModel):
 
     def __repr(self) -> str:
         return str(self.username)
+
+
+class Filter(BaseModel):
+    user = ForeignKeyField(User, backref='filters', null=True)
+    country_from = CharField(null=True)
+    country_to = CharField(null=True)

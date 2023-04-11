@@ -1,3 +1,6 @@
+from datetime import datetime
+
+
 def make_short_search_query_params(
     cal_input_text_from: str,
     cal_input_text_to: str,
@@ -15,11 +18,9 @@ def make_short_search_query_params(
     is_humanitarian_filter: bool,
     is_only_new_filter: bool,
     is_only_from_verified_filter: bool,
-    group_filter_select: str,
     price_type_filter: list[str],
     search_time_filter_select: str,
     load_type_filter: list[str],
-    bookmark_number: str,
     weight_from: str = '0',
     weight_to: str = '0',
     cube_from: str = '0',
@@ -70,7 +71,6 @@ def make_short_search_query_params(
     citid = (
         cf_array
     ) = rf_array = cif_array = ct_array = rt_array = cit_array = []
-    False
 
     for truck_id in truck_select:
         if truck_id != '6' and truck_id not in truck_array:
@@ -152,7 +152,6 @@ def make_short_search_query_params(
         {'mask': 'y4', 'condition': is_humanitarian_filter},
         {'mask': 'z7', 'condition': is_only_new_filter},
         {'mask': 'y5', 'condition': is_only_from_verified_filter},
-        {'mask': 'y6', 'value': int(group_filter_select)},
         {'mask': 'z5', 'value': sum(map(int, price_type_filter))},
         {'mask': 'z6', 'value': int(search_time_filter_select)},
         {'mask': 'y2', 'value': sum(map(int, load_type_filter))},
@@ -195,7 +194,6 @@ def make_short_search_query_params(
             location += 'l'
 
     location += f'k{int(cargo == "trans")}'
-    location += f'm{bookmark_number}' if bookmark_number else ''
 
     return location
 
@@ -241,4 +239,4 @@ def make_short_search_query_url(
         is_load_up_filter,
         is_adr_filter,
     )  # pass in all the required arguments
-    return f'//{DELLA_URL}{ADD_PATH}/search/{params}.html' if params else ''
+    return f'https://della.kz/search/{params}.html' if params else ''

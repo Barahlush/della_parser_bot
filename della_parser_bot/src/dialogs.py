@@ -31,3 +31,20 @@ class AddFilter(Phrase):
 
     def callback(self, call: Callable[..., Any]) -> None:
         pass
+
+
+class DialogueFilter:
+    def __init__(
+        self,
+        name: str,
+        text: str,
+        filter_type: str,
+        value: str | int | bool | float,
+    ):
+        self.name = name
+        self.text = text
+        self.filter_type = filter_type
+        self.value = value
+
+    def __repr__(self) -> str:
+        return self.name
